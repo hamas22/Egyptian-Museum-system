@@ -8,13 +8,13 @@
 /* =================================== */
 ::-moz-selection {
   /* Code for Firefox */
-  background-color: #88d200;
+  background-color: #edf0e8;
   color: #fff;
 }
 
 ::selection {
-  background-color: #88d200;
-  color: #fff;
+  background-color: #c49b4a; /* ذهبي دافيء */
+  color: #3e2723; /* بني غامق */
 }
 
 ::-webkit-input-placeholder {
@@ -817,13 +817,10 @@ h1, h2, h3, h4, h5, h6 {
   color: #777777;
 }
 
-.button-area {
-  background: #fff;
-}
+
 
 .button-area .border-top-generic {
   padding: 70px 15px;
-  border-top: 1px dotted #eee;
 }
 
 .button-group-area .genric-btn {
@@ -922,20 +919,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .genric-btn.primary:hover {
-  color: #88d200;
-  border: 1px solid #88d200;
+
   background: #fff;
 }
 
 .genric-btn.primary-border {
-  color: #88d200;
-  border: 1px solid #88d200;
   background: #fff;
 }
 
 .genric-btn.primary-border:hover {
   color: #fff;
-  background: #88d200;
   border: 1px solid transparent;
 }
 
@@ -1306,7 +1299,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .single-input-primary:focus {
   outline: none;
-  border: 1px solid #88d200;
+  border: 1px solid #000000;
 }
 
 .single-input-accent {
@@ -1799,12 +1792,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .default-select .nice-select .list .option.selected {
-  color: #88d200;
   background: transparent;
 }
 
 .default-select .nice-select .list .option:hover {
-  color: #88d200;
   background: transparent;
 }
 
@@ -1854,12 +1845,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .form-select .nice-select .list .option.selected {
-  color: #88d200;
   background: transparent;
 }
 
 .form-select .nice-select .list .option:hover {
-  color: #88d200;
   background: transparent;
 }
 
@@ -1919,10 +1908,6 @@ h1, h2, h3, h4, h5, h6 {
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s;
-}
-
-.top-head-right ul li:hover a {
-  color: #88d200;
 }
 
 #header.header-scrolled {
@@ -2072,9 +2057,7 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: none;
 }
 
-.nav-menu ul li:hover > a {
-  color: #88d200;
-}
+
 
 .nav-menu ul ul {
   margin: 0;
@@ -2260,9 +2243,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .primary-btn:hover {
-  color: #88d200;
   background-color: transparent;
-  border-color: #88d200;
 }
 
 .primary-btn.white {
@@ -2276,12 +2257,9 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .primary-btn.white:hover {
   background: #fff;
-  color: #88d200;
 }
 
-.primary-btn.white:hover span {
-  color: #88d200;
-}
+
 
 .overlay {
   position: absolute;
@@ -2503,9 +2481,6 @@ body.mobile-nav-active #mobile-nav-toggle {
   font-weight: 600;
 }
 
-.single-exibition .tags li:hover {
-  background-color: #88d200;
-}
 
 .single-exibition .tags li:hover a {
   color: #fff;
@@ -2653,9 +2628,6 @@ body.mobile-nav-active #mobile-nav-toggle {
   font-weight: 600;
 }
 
-.copy-right-text i, .copy-right-text a {
-  color: #88d200;
-}
 
 .footer-social a {
   padding-right: 25px;
@@ -2665,9 +2637,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   transition: all 0.3s ease 0s;
 }
 
-.footer-social a:hover i {
-  color: #88d200;
-}
+
 
 .footer-social i {
   color: #cccccc;
@@ -2700,7 +2670,6 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .single-footer-widget .bb-btn {
-  color: #88d200;
   color: #fff;
   font-weight: 300;
   border-radius: 0;
@@ -2724,7 +2693,6 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .single-footer-widget .click-btn {
-  background-color: #88d200;
   color: #fff;
   border-radius: 0;
   border-top-left-radius: 0px;
@@ -3071,7 +3039,6 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .contact-page-area .form-area .primary-btn:hover {
   border: 1px solid #88d200;
-  color: #88d200 !important;
 }
 
 @media (max-width: 960px) {
@@ -3136,9 +3103,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   color: #222;
 }
 
-.single-post .tags li:hover a {
-  color: #88d200;
-}
+
 
 .single-post h1 {
   margin-top: 20px;
@@ -3194,7 +3159,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .search-widget i {
-  color: #88d200;
+  color: #c1c4bb;
 }
 
 .search-widget form.example {
@@ -3214,8 +3179,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   float: left;
   width: 20%;
   padding: 10px;
-  background: #eee;
-  color: white;
+
   font-size: 17px;
   border: none;
   cursor: pointer;
@@ -3244,10 +3208,6 @@ body.mobile-nav-active #mobile-nav-toggle {
   color: #222;
 }
 
-.protfolio-widget ul li a i:hover {
-  color: #88d200;
-}
-
 .category-widget ul li {
   border-bottom: 1px solid #eee;
   padding: 10px 20px;
@@ -3273,9 +3233,6 @@ body.mobile-nav-active #mobile-nav-toggle {
   transition: all 0.3s ease 0s;
 }
 
-.category-widget ul li:hover {
-  border-color: #88d200;
-}
 
 .category-widget ul li:hover h6, .category-widget ul li:hover span {
   color: #88d200;
@@ -3298,13 +3255,6 @@ body.mobile-nav-active #mobile-nav-toggle {
   color: #222;
 }
 
-.tags-widget ul li:hover {
-  background-color: #88d200;
-}
-
-.tags-widget ul li:hover a {
-  color: #fff;
-}
 
 .recent-posts-widget .single-recent-post .recent-details {
   margin-left: 20px;
@@ -3323,9 +3273,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   margin-top: 10px;
 }
 
-.recent-posts-widget .single-recent-post:hover h4 {
-  color: #88d200;
-}
+
 
 @media (max-width: 960px) {
   .recent-posts-widget .single-recent-post {
@@ -3444,9 +3392,6 @@ body.mobile-nav-active #mobile-nav-toggle {
   color: #fff;
 }
 
-.commentform-area .primary-btn:hover {
-  border-color: #88d200 !important;
-}
 
 .commentform-area textarea {
   height: 90%;

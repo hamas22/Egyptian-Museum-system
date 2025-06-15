@@ -8,7 +8,97 @@ session_start();
 <html lang="zxx" class="no-js">
 <head>
 	<style>
-		/* modal-addevent Styles */
+	
+.table-responsive {
+  margin-top: 30px;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.table {
+  background-color: #ffffff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.table-dark th {
+background: linear-gradient(45deg, #4e342e, #bfa16f);
+  color: white;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  border: none;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f0f8ff;
+  transform: scale(1.01);
+  cursor: pointer;
+}
+
+.table img {
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.table img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn {
+  transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.btn-info {
+  background-color: #0dcaf0;
+  border: none;
+}
+
+.btn-info:hover {
+  background-color: #0aa2c0;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #bb2d3b;
+}
+
+.btn-success {
+  background-color: #198754;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #157347;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 		.modal-addevent {
 			  display: none;
 			  position: fixed;
@@ -148,6 +238,230 @@ session_start();
 		  padding: 12px;
 		  margin-top: 10px;
 		}
+		.custom-add-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: linear-gradient(45deg, #4e342e, #bfa16f);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.custom-add-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #5d4037, #d7b97f);
+  text-decoration: none;
+  color: #fff;
+}
+
+#editEventModal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(30, 20, 10, 0.85);
+  backdrop-filter: blur(4px);
+  animation: fadeInModal 0.5s ease;
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+#editEventModal .modal-dialog {
+  max-width: 600px;
+  margin: 5% auto;
+}
+
+#editEventModal .modal-content {
+  background: linear-gradient(135deg, #f3e9dc, #e0c9a6);
+  border: 1px solid #bfa16f;
+  border-radius: 15px;
+  padding: 20px;
+  color: #3e2723;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+#editEventModal .modal-header {
+  border-bottom: 1px solid #bfa16f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#editEventModal .modal-title {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+#editEventModal .close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #6b4f38;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+#editEventModal .close:hover {
+  color: #bfa16f;
+}
+
+#editEventModal .modal-body {
+  margin-top: 15px;
+}
+
+#editEventModal .form-control {
+  border-radius: 8px;
+  border: 1px solid #bfa16f;
+  padding: 10px;
+  margin-bottom: 15px;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+#editEventModal .form-control:focus {
+  border-color: #8d6e63;
+  box-shadow: 0 0 5px rgba(191, 161, 111, 0.5);
+}
+
+#editEventModal .modal-footer {
+  border-top: 1px solid #bfa16f;
+  padding-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+#editEventModal .btn-primary {
+  background: linear-gradient(45deg, #5d4037, #d7b97f);
+  border: none;
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
+#editEventModal .btn-primary:hover {
+  background: linear-gradient(45deg, #4e342e, #bfa16f);
+  transform: scale(1.05);
+}
+
+#editEventModal .btn-secondary {
+  background-color: #6c757d;
+  border: none;
+  transition: all 0.3s ease-in-out;
+}
+
+#editEventModal .btn-secondary:hover {
+  background-color: #5a6268;
+  transform: scale(1.05);
+}
+.input-group {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+#searchInput {
+  padding: 12px 15px;
+  border: 1px #6d4c41 solid;
+  border-radius: 0 12px 12px 0;
+  background-color: #fffaf0;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  color: #5d4037;
+}
+
+#searchInput:focus {
+  outline: none;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(205, 170, 102, 0.6);
+}
+
+.input-group-text {
+  border: 2px black solid;
+  border-radius: 12px 0 0 12px;
+  background: linear-gradient(45deg, #6d4c41, #d7a94b);
+  color: #fff;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  transition: background 0.4s ease;
+}
+
+.input-group-text:hover {
+  background: linear-gradient(45deg, #5d4037, #c49b4a);
+  cursor: pointer;
+}
+
+.menu-content {
+  margin-top: 50px;
+  animation: fadeInUp 1s ease-in-out both;
+}
+
+.menu-content .title h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #4e342e; 
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.menu-content .title h1::after {
+  content: '';
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, #c49b4a, #a1887f);
+  display: block;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+.menu-content .title p {
+  font-size: 18px;
+  color: #6d4c41; 
+  max-width: 600px;
+  margin: 10px auto 0;
+  line-height: 1.6;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 	  </style>
 
 	<!-- Mobile Specific Meta -->
@@ -256,14 +570,15 @@ session_start();
 									<i class="fas fa-search text-light"></i>
 									</span> 
 								</div>
-								<input type="text" id="searchInput" class="form-control" placeholder="Search user...">
+								<input type="text" id="searchInput" class="form-control" placeholder="Search event...">
 							</div>
 						</div>
 						<div class="col-2">
-							<button class="btn btn-dark">
+							<button class="btn">
 							<?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-    <a href="../Admin/AddEvent.php" class="text-light">Add new Event</a>
+  <a href="../Admin/AddEvent.php" class="custom-add-btn">Add new Event</a>
 <?php endif; ?>
+
 							</button>
 						</div>
 					</div>

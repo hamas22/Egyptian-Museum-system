@@ -45,7 +45,7 @@ $museumController->closeconnection();
 <html lang="zxx" class="no-js">
     <head>
         <style>
-            /* Modal Styles */
+
             .modal {
               display: none;
               position: fixed;
@@ -167,6 +167,153 @@ $museumController->closeconnection();
         background-color: #218838;
     }
 
+body {
+background: linear-gradient(to bottom, #efebe9, #d7ccc8);
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.about-content h1 {
+  font-size: 2.8rem;
+  font-weight: bold;
+  animation: fadeDown 1s ease-out;
+}
+
+.about-content p a {
+  color: #ffcc80;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.about-content p a:hover {
+  color: #fff176;
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-container {
+  background: linear-gradient(145deg, #fbe9e7, #e0c9a6);
+  max-width: 650px;
+  margin: 50px auto;
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  animation: slideInUp 1.2s ease;
+  color: #4e342e;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-container h2 {
+  text-align: center;
+  color: #3e2723;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  position: relative;
+}
+
+.form-container h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #d7a94b;
+  margin: 10px auto 0;
+  border-radius: 2px;
+  animation: expandLine 1s ease-out;
+}
+
+@keyframes expandLine {
+  from {
+    width: 0;
+  }
+  to {
+    width: 60px;
+  }
+}
+
+.form-group {
+  margin-bottom: 20px;
+  animation: fadeIn 1s ease forwards;
+  opacity: 0;
+}
+.form-group:nth-child(1) { animation-delay: 0.2s; }
+.form-group:nth-child(2) { animation-delay: 0.4s; }
+.form-group:nth-child(3) { animation-delay: 0.6s; }
+.form-group:nth-child(4) { animation-delay: 0.8s; }
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="file"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #bfa16f;
+  border-radius: 10px;
+  background-color: #fffaf0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #8d6e63;
+  box-shadow: 0 0 8px rgba(191, 161, 111, 0.5);
+  outline: none;
+}
+
+.primary-btn {
+  background: linear-gradient(45deg, #6d4c41, #d7a94b);
+  color: #fff;
+  border: none;
+  padding: 14px 25px;
+  font-weight: bold;
+  border-radius: 10px;
+  display: block;
+  margin: 20px auto 0;
+  transition: background 0.4s ease, transform 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.primary-btn:hover {
+  background: linear-gradient(45deg, #5d4037, #c49b4a);
+  transform: scale(1.05);
+}
+
+
+
         </style>
 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -230,7 +377,7 @@ $museumController->closeconnection();
             <div class="row d-flex align-items-center justify-content-center">
                 <div class="about-content col-lg-12">
                     <h1 class="text-white">
-                        Adding Events <span style="color: rgb(195, 40, 16);">(FOR ADMINS)</span>
+                        Adding Events <span style="color: rgb(195, 40, 16); ">(FOR ADMINS)</span>
                     </h1>
                     <p class="text-white link-nav"><a href="index.php">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="AddEvent.php" > Add Events</a></p>
                 </div>

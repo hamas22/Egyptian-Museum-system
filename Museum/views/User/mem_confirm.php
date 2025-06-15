@@ -68,11 +68,9 @@ $selectedType = $_GET['type'] ?? '';
     </div>
 
     <script>
-        // تعيين الحد الأدنى لتاريخ البدء ليكون اليوم
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('startDate').setAttribute('min', today);
 
-        // حساب تاريخ النهاية بناءً على تاريخ البداية
         document.getElementById('startDate').addEventListener('change', function() {
             const startDate = new Date(this.value);
             if (!isNaN(startDate.getTime())) {
@@ -84,15 +82,14 @@ $selectedType = $_GET['type'] ?? '';
             }
         });
 
-        // التحقق من تاريخ البدء قبل إرسال النموذج
         document.getElementById('visitForm').addEventListener('submit', function(e) {
             const startDateInput = document.getElementById('startDate');
             const startDate = new Date(startDateInput.value);
             const today = new Date();
-            today.setHours(0, 0, 0, 0); // تطبيع المقارنة لتاريخ فقط
+            today.setHours(0, 0, 0, 0); 
 
             if (startDate < today) {
-                e.preventDefault(); // منع الإرسال
+                e.preventDefault(); 
                 alert("Start date cannot be in the past.");
                 startDateInput.focus();
             }

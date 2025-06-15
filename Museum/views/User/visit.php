@@ -1,11 +1,18 @@
 <?php
 session_start();
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require_once 'PHPMailer/src/PHPMailer.php';
+require_once 'PHPMailer/src/SMTP.php';
+require_once 'PHPMailer/src/Exception.php';
+
 require_once '../../models/ticket.php';
 require_once '../../controllers/controle.php';
 
 $er_username = $er_useremail = $er_visittype = $er_date = $er_time  = $er_time_range = "";
 $success = false;
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['your_name'] ?? '');
@@ -13,16 +20,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $visitType = $_POST['visit_type'] ?? '';
     $date = $_POST['date'] ?? '';
     $time = $_POST['time'] ?? '';
+
     if ($visitType === 'Individual') {
         $numTickets = 1;
     } else {
         $numTickets = isset($_POST['num_of_ticket']) ? (int)$_POST['num_of_ticket'] : 0;
     }
+
     $price = 0;
     if ($visitType === 'Group') {
         $price = $numTickets * 40;
     } elseif ($visitType === 'Individual') {
-        $price = $numTickets * 50; 
+        $price = $numTickets * 50;
     }
 
     if (empty($name)) $er_username = "Name is Required";
@@ -49,8 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if (empty($er_username) && empty($er_useremail) && empty($er_visittype) && empty($er_date) && empty($er_time) && empty($er_time_range)) 
-    {
+    if (empty($er_username) && empty($er_useremail) && empty($er_visittype) && empty($er_date) && empty($er_time) && empty($er_time_range)) {
         $ticket = new ticket();
         $ticket->setName($name);
         $ticket->setEmail($email);
@@ -60,19 +68,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ticket->setNoOfTickets($numTickets);
 
         $_SESSION['ticket'] = $ticket;
-    }
+
         $controller = new museum_controller();
 
         if ($controller->openconnection()) {
             $query = "INSERT INTO ticket (visit_type, date, time, no_of_tickets, name, email, user_id, price) VALUES (
                 '$visitType', '$date', '$time', '$numTickets', '$name', '$email', '{$_SESSION['user_id']}', '$price')";
             $controller->insert($query);
+
+            $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com'; 
+                $mail->SMTPAuth = true;
+                $mail->Username = 'hmastulib@gmail.com'; 
+                $mail->Password = 'eiyx xozx mqah rbva'; 
+                $mail->SMTPSecure = 'tls';
+                $mail->Port = 587;
+
+                $mail->setFrom('hmastulib@gmail.com', 'Museum Reservation');
+                $mail->addAddress($email, $name);
+
+                $mail->isHTML(true);
+                $mail->Subject = 'Ticket Reservation Confirmation';
+                $mail->Body = "
+                    <h2>Hello $name,</h2>
+                    <p>Your reservation has been confirmed with the following details:</p>
+                    <ul>
+                        <li><strong>Visit Type:</strong> $visitType</li>
+                        <li><strong>Date:</strong> $date</li>
+                        <li><strong>Time:</strong> $time</li>
+                        <li><strong>Number of Tickets:</strong> $numTickets</li>
+                        <li><strong>Total Price:</strong> $$price</li>
+                    </ul>
+                    <p>Thank you for booking with us!</p>
+                ";
+
+                $mail->send();
+            } catch (Exception $e) {
+              echo "Mailer Error: " . $mail->ErrorInfo;
+
+                error_log("Email could not be sent. Mailer Error: {$mail->ErrorInfo}");
+            }
+
             header('Location: payment.php');
             exit();
         }
     }
-
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

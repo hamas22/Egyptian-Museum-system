@@ -54,7 +54,7 @@ class museum_controller {
         if ($this->connection->query($query) === TRUE) {
             return true;
         } else {
-            return false; // يمكنك تعديل هذا لإرجاع رسالة الخطأ إذا أردت
+            return false; 
         }
     }
 }

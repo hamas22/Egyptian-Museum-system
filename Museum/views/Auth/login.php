@@ -56,6 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,13 +64,82 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-image: url('img/ar2.jpg');
-            background-size: cover;
-            background-position: center;
-            min-height: 100vh;
-            color: white;
-        }
+   body {
+  background: linear-gradient(to right, #f9f5ec, #fff);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.card {
+  background: #fff8e1;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  animation: slideFadeIn 0.7s ease;
+}
+
+.card-body {
+  padding: 40px;
+}
+
+h3 {
+  font-weight: bold;
+  color: #5d4037;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px #d4af37;
+}
+
+input.form-control {
+  border-radius: 10px;
+  border: 1px solid #c8b88a;
+  transition: all 0.3s ease;
+}
+
+input.form-control:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+}
+
+.btn-success {
+  background-color: #d4af37 !important;
+  color: #000;
+  font-weight: bold;
+  border-radius: 50px;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.btn-success:hover {
+  transform: scale(1.05);
+  background-color: #caa635 !important;
+}
+
+a {
+  color: #5d4037;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+#loginMessage {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
     </style>
 </head>
 

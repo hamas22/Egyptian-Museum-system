@@ -6,7 +6,6 @@ session_start();
 	<html lang="zxx" class="no-js">
 	<head>
 		<style>
-			/* modal-addevent Styles */
 			
 			.modal-addevent {
 			  display: none;
@@ -77,6 +76,100 @@ session_start();
 			  padding: 12px;
 			  margin-top: 10px;
 			}
+
+			.event-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: linear-gradient(45deg, #6d4c41, #d7a94b);
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.event-btn:hover {
+  background: linear-gradient(45deg, #5d4037, #c49b4a);
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+.masa-btn {
+  display: inline-block;
+  padding: 12px 28px;
+  background: linear-gradient(45deg, #5d4037, #d7a94b); 
+  color: #fff;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.masa-btn:hover {
+  background: linear-gradient(45deg, #4e342e, #c49b4a);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+}
+
+#nav-menu-container {
+  width: 100%;
+  padding: 0 30px;
+  background: none; 
+  box-shadow: none; 
+  margin-bottom: 20px;
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+  align-items: center;
+  gap: 20px;
+  margin: 0;
+  padding: 10px 0;
+}
+
+.nav-menu li {
+  position: relative;
+}
+
+.nav-menu li a {
+  color:rgb(255, 255, 255); 
+  font-weight: 500;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.nav-menu li a:hover,
+.nav-menu .menu-active a {
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+.event-btn {
+  background: linear-gradient(45deg, #a1887f, #ffcc80);
+  color: #000 !important;
+  padding: 8px 18px;
+  border-radius: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.event-btn:hover {
+  background: linear-gradient(45deg, #8d6e63, #ffd54f);
+  transform: scale(1.05);
+}
+
 		  </style>
 	
 		<!-- Mobile Specific Meta -->
@@ -145,10 +238,8 @@ session_start();
 
 
 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-    <button class="primary-btn text-light" type="button">
-        <a href="../Admin/AddEvent.php" class="text-light">Add Event</a>
+<a href="../Admin/AddEvent.php" class="event-btn">Add Event</a>
 		
-    </button>
 <?php endif; ?>
 
 
@@ -156,6 +247,8 @@ session_start();
 				          <li><a href="visit.php">Visit</a></li>
 						  <li><a href="manage.php">Manage</a></li>
 						  <li><a href="feedback.php">Feedback</a></li>
+						<li><a href="Services.php">Services</a></li>
+
 				          		          
 				        </ul>
 				      </nav><!-- #nav-menu-container -->		    		
@@ -177,7 +270,7 @@ session_start();
 							<p class="pt-20 pb-20 text-white">
 								"The Egyptian Museum in Cairo is considered one of the most important and oldest museums in the world, housing a rare collection of archaeological treasures from ancient Egypt. This placeholder text is intended to demonstrate how content will appear within the design without relying on final wording. As visitors explore the various halls, they can immerse themselves in the world of the pharaohs and discover the details of ancient Egyptian civilization."
 							</p>
-							<a href="../Auth/login.php" class="primary-btn text-uppercase">Get Started</a>
+							<a href="../Auth/login.php" class="masa-btn text-uppercase text-white">Get Started</a>
 						</div>											
 					</div>
 				</div>					

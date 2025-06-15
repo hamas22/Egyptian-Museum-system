@@ -122,8 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     alert("✅ Thanks for subscribing to the membership !");
 
-    // Optionally redirect after confirmation
-    window.location.href = "index.php"; // Uncomment this line if needed
+    window.location.href = "index.php"; 
   });
   </script>
 </body>

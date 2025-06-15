@@ -1,173 +1,168 @@
 <?php
 session_start();
+require_once '../../controllers/controle.php';
 
-$feedbackMessage = "";
-$feedbacks = [];
-$isAdmin = false;
-$adminId = null;
+$museumController = new museum_controller();
+$museumController->openconnection();
 
-$conn = new mysqli("localhost", "root", "", "museum");
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+$role = $_SESSION['role'] ?? '';
+$admin_id = $_SESSION['admin_id'] ?? null;
+$user_id = $_SESSION['user_id'] ?? null;
 
-if (!isset($_SESSION["user_id"])) {
-    $feedbackMessage = "You must be logged in to access this page.";
-} else {
-    $userId = $_SESSION["user_id"];
-
-    $adminQuery = $conn->prepare("SELECT admin_id FROM admin WHERE admin_id = ?");
-    $adminQuery->bind_param("i", $userId);
-    $adminQuery->execute();
-    $adminQuery->store_result();
-
-    if ($adminQuery->num_rows > 0) {
-        $isAdmin = true;
-        $adminQuery->bind_result($adminId);
-        $adminQuery->fetch();
-    }
-    $adminQuery->close();
-}
-
-if ($isAdmin && isset($_POST["reply"]) && isset($_POST["feedback_Id"])) {
-    $feedbackId = $_POST["feedback_Id"];
-    $reply = trim($_POST["reply"]);
-
-    if (!empty($reply)) {
-        $checkStmt = $conn->prepare("SELECT report_Id FROM report WHERE feedback_Id = ?");
-        $checkStmt->bind_param("i", $feedbackId);
-        $checkStmt->execute();
-        $checkStmt->store_result();
-
-        if ($checkStmt->num_rows == 0) {
-            // Insert new reply
-            $stmt = $conn->prepare("INSERT INTO report (admin_Id, feedback_Id, reply) VALUES (?, ?, ?)");
-            $stmt->bind_param("iis", $adminId, $feedbackId, $reply);
-            if ($stmt->execute()) {
-                $feedbackMessage = "✅ Reply sent and saved!";
-            } else {
-                $feedbackMessage = "❌ Failed to save reply: " . $stmt->error;
-            }
-            $stmt->close();
-        } else {
-            $feedbackMessage = "⚠️ Feedback already has a reply.";
-        }
-
-        $checkStmt->close();
-    } else {
-        $feedbackMessage = "⚠️ Reply cannot be empty.";
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($role == 'user' && isset($_POST['message'])) {
+        $msg = $museumController->connection->real_escape_string(trim($_POST['message']));
+        $sql = "INSERT INTO feedback (message, user_Id) VALUES ('$msg', '$user_id')";
+        $museumController->connection->query($sql);
+    } elseif ($role == 'admin' && isset($_POST['reply'], $_POST['feedback_id'])) {
+        $reply = $museumController->connection->real_escape_string(trim($_POST['reply']));
+        $fid = intval($_POST['feedback_id']);
+        $sql = "INSERT INTO report (reply, admin_Id, feedback_Id) VALUES ('$reply', '$admin_id', '$fid')";
+        $museumController->connection->query($sql);
     }
 }
-
-if (!$isAdmin && $_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["message"])) {
-    $message = trim($_POST["message"]);
-    if (!empty($message)) {
-        $stmt = $conn->prepare("INSERT INTO feedback (user_Id, message) VALUES (?, ?)");
-        $stmt->bind_param("is", $userId, $message);
-        if ($stmt->execute()) {
-            $feedbackMessage = "✅ Feedback saved successfully!";
-        } else {
-            $feedbackMessage = "❌ Error saving feedback: " . $stmt->error;
-        }
-        $stmt->close();
-    } else {
-        $feedbackMessage = "⚠️ Please enter a message.";
-    }
-}
-
-if ($isAdmin) {
-    $result = $conn->query("
-        SELECT 
-            feedback.feedback_Id, 
-            user.user_Id, 
-            feedback.message,
-            report.reply
-        FROM feedback 
-        JOIN user ON user.user_Id = feedback.user_Id
-        LEFT JOIN report ON feedback.feedback_Id = report.feedback_Id
-    ");
-    while ($row = $result->fetch_assoc()) {
-        $feedbacks[] = $row;
-    }
-    $result->close();
-}
-
-$conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Art Museum - Feedback</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../assets/css/bootstrap.css">
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <title>Feedback</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f2ec;
+            color: #4b3e2e;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 60px auto;
+            background-color: #fffaf0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            text-align: center;
+            color: #6b4e2f;
+            margin-bottom: 30px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 2px solid #b89c79;
+            border-radius: 8px;
+            resize: vertical;
+            font-size: 16px;
+            background-color: #fefcf9;
+            transition: border 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #a67c52;
+        }
+
+        button {
+            background-color: #a67c52;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            margin-top: 10px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #8b6a43;
+            transform: scale(1.05);
+        }
+
+        .feedback-box {
+            border: 1px solid #d2b48c;
+            background-color: #fff8f0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: box-shadow 0.3s;
+        }
+
+        .feedback-box:hover {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .top-bar {
+            background-color: #6b4e2f;
+            padding: 15px;
+            text-align: right;
+        }
+
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            background-color: #a67c52;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .top-bar a:hover {
+            background-color: #8b6a43;
+        }
+    </style>
 </head>
 <body>
 
-<section class="banner-area relative" id="home">
-    <div class="overlay overlay-bg"></div>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="about-content col-lg-12 text-center">
-                <h1 class="text-white">Feedback</h1>
-                <p class="text-white link-nav"><a href="index.php">Home</a> <span class="lnr lnr-arrow-right"></span> Feedback</p>
-            </div>
-        </div>
-    </div>
-</section>
+<div class="top-bar">
+    <a href="index.php">🏠 Home</a>
+</div>
 
-<section class="contact-page-area section-gap">
-    <div class="container">
-        <?php if (!empty($feedbackMessage)): ?>
-            <div class="alert alert-info"><?php echo htmlspecialchars($feedbackMessage); ?></div>
-        <?php endif; ?>
+<div class="container">
+<?php if ($role == 'user'): ?>
+    <h2>Send Feedback</h2>
+    <form method="POST">
+        <textarea name="message" required placeholder="Write your feedback here..."></textarea><br>
+        <button type="submit">Send</button>
+    </form>
 
-        <?php if ($isAdmin): ?>
-            <h2>All User Feedback</h2>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>Message</th>
-                        <th>Reply</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($feedbacks as $row): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['user_Id']); ?></td>
-                            <td><?php echo htmlspecialchars($row['message']); ?></td>
-                            <td>
-                                <?php if (!empty($row['reply'])): ?>
-                                    <strong><?php echo htmlspecialchars($row['reply']); ?></strong>
-                                <?php else: ?>
-                                    <form method="post" action="">
-                                        <input type="hidden" name="feedback_Id" value="<?php echo $row['feedback_Id']; ?>">
-                                        <input type="text" name="reply" required>
-                                        <button type="submit" class="btn btn-primary btn-sm">Send Reply</button>
-                                    </form>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php elseif (isset($_SESSION["user_id"])): ?>
-            <h2>Send Your Feedback</h2>
-            <form method="post" action="feedback.php">
-                <div class="form-group">
-                    <label for="message">Your Feedback</label>
-                    <textarea name="message" id="message" class="form-control" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-success">Send Feedback</button>
+<?php elseif ($role == 'admin'): ?>
+    <h2>User Feedbacks</h2>
+    <?php
+    $query = "SELECT f.feedback_Id, f.message, u.name AS username 
+              FROM feedback f 
+              JOIN user u ON f.user_Id = u.user_id";
+    $result = $museumController->connection->query($query);
+
+    while ($row = $result->fetch_assoc()):
+    ?>
+        <div class="feedback-box">
+            <p><strong>User:</strong> <?= htmlspecialchars($row['username']) ?></p>
+            <p><strong>Message:</strong> <?= htmlspecialchars($row['message']) ?></p>
+            <form method="POST">
+                <input type="hidden" name="feedback_id" value="<?= $row['feedback_Id'] ?>">
+                <textarea name="reply" required placeholder="Write your report..."></textarea><br>
+                <button type="submit">Send Report</button>
             </form>
-        <?php else: ?>
-            <div class="alert alert-warning">Please <a href="login.php">log in</a> to send feedback.</div>
-        <?php endif; ?>
-    </div>
-</section>
+        </div>
+    <?php endwhile; ?>
+<?php else: ?>
+    <p>Please login first.</p>
+<?php endif; ?>
+</div>
 
 </body>
 </html>

@@ -11,7 +11,6 @@ if ($museumController->openconnection()) {
     if ($user_Id) {
         
         $query = "SELECT type_of_membership FROM membership WHERE user_Id = $user_Id";
-
      
         $result = $museumController->select($query);
 
